@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import DataTable from './components/DataTable'; // adjust the path if needed
 
 function App() {
+  // Function to add or update a comment
+  const addOrUpdateComment = async () => {
+    const userId = 12345; // replace with your user ID
+    const comment = "This is a sample comment"; // replace with your comment
+
+    try {
+      const response = await fetch('http://localhost:5001/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId, comment })
+      });
+
+      const result = await response.json();
+      console.log('Comment response:', result);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>My Data Table</h1>
+      <DataTable />
+      <button onClick={addOrUpdateComment}>Submit Comment</button>
     </div>
   );
 }
